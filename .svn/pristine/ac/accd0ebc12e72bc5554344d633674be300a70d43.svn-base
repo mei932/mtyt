@@ -1,0 +1,43 @@
+<!-- BEGIN PAGE HEADER-->
+<!--<div class="page-bar">-->
+    <!--<h3 class="page-title pull-left"><i class="icon-layers"></i> Quản lý người dùng</h3>-->
+    <!--<ul class="page-breadcrumb pull-right hidden-xs">-->
+        <!--<li>-->
+            <!--<a href="#">Hệ thống</a>-->
+            <!--<i class="fa fa-circle"></i>-->
+        <!--</li>-->
+        <!--<li>-->
+            <!--<a href="#/dashboard">Tài khoản người dùng</a>-->
+        <!--</li>-->
+    <!--</ul>-->
+<!--</div>-->
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+<div class="row margin-top-10">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-body">
+                <div class="tabbable-line">
+                    <ul class="nav nav-tabs ">
+                        <li class="active">
+                            <a href="#" data-toggle="tab"> VAI TRÒ </a>
+                        </li>
+                        <li>
+                            <a href="#" data-toggle="tab"> NGƯỜI DÙNG </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active">
+
+                        </div>
+                        <div class="tab-pane">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS-->
+<!-- BEGIN MAIN JS -->

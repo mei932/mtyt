@@ -1,0 +1,463 @@
+<!-- BEGIN PAGE HEADER-->
+<!--<div class="page-bar">-->
+    <!--<h3 class="page-title pull-left"><i class="icon-layers"></i>Danh mục phòng ban</h3>-->
+    <!--<ul class="page-breadcrumb pull-right hidden-xs">-->
+        <!--<li>-->
+            <!--<a href="#">Quản trị</a>-->
+            <!--<i class="fa fa-circle"></i>-->
+        <!--</li>-->
+        <!--<li>-->
+            <!--<a href="#">Danh mục</a>-->
+            <!--<i class="fa fa-circle"></i>-->
+        <!--</li>-->
+        <!--<li>-->
+            <!--<a href="#/department">Phòng ban</a>-->
+        <!--</li>-->
+    <!--</ul>-->
+<!--</div>-->
+
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+<div class="row margin-top-10">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="btn-group pull-left margin-top-10 margin-bottom-10">
+                    <button class="btn btn-default" data-ng-click="vm.newDepartment()"><i class="fa fa-plus-circle"></i>Thêm mới</button>
+                	<button class="btn btn-default margin-left-10" data-ng-click="vm.importDepartment()"><i class="fa fa-cloud-upload"></i> Import</button>
+                    <button class="btn btn-default margin-left-10" data-ng-click="vm.updateLinePath()"><i class="fa fa-refresh"></i> Cập nhật đường dẫn</button>
+                    <a href="#" class="btn btn-default margin-left-10" file-name="'PhongBan.xls'"  ng-click="getFile()" file-download="myBlobObject"><i class="fa fa-file-excel-o"> Export</i></a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-5" style="border: solid 1px rgba(230, 238, 238, 0.55)">
+                        <div class="row form-group" style="margin-top: 15px">
+                            <div class="col-md-12">
+                                <input type="text" class="form-control" ng-model="search" ng-keyup="applySearch(search)" placeholder="Tìm theo tên">
+                            </div>
+                        </div>
+                        <div class="panel-body" style="height:700px; overflow: auto;">
+                            <div tree-plugins="search" js-tree="treeConfig" ng-model="vm.treeData" tree="treeInstance" tree-events="select_node:selectNode;ready:readyCB"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="row form-group">
+                            <div class="col-md-12">
+                                <div class="panel panel-default" style="border: solid 1px #cddbd1;">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <a><i class="fa fa-info" aria-hidden="true"></i> Thông tin chính</a>
+                                            </div>
+                                            <div class="col-md-5">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button ng-if="vm.departmentDetail.id != null" class="btn btn-danger margin-left-10" data-ng-click="vm.deleteDetailDepartments()"><i class="fa fa-trash"></i>Xóa</button>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button ng-if="vm.departmentDetail.id != null" style="" class="btn btn-primary" data-ng-click="vm.updateDepartmentDetail(vm.departmentDetail.id)"><i class="icon-pencil"></i>Sửa</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row form-group">
+                                            <div class="col-md-6">
+                                                <label class="bold">Tên phòng ban: </label>
+                                                <input readonly data-ng-model="vm.departmentDetail.name" type="text" class="form-control">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="bold">Mã phòng ban: </label>
+                                                <input readonly data-ng-model="vm.departmentDetail.code" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-6">
+                                                <label class="bold">Chức năng</label>
+                                                <input ng-if="vm.departmentDetail.departmentType != 1 && vm.departmentDetail.departmentType != 2" readonly value="" type="text" class="form-control">
+                                                <input ng-if="vm.departmentDetail.departmentType == 1" readonly value="Phòng ban hành chính" type="text" class="form-control">
+                                                <input ng-if="vm.departmentDetail.departmentType == 2" readonly value="Trung tâm đào tạo" type="text" class="form-control">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="bold">Phòng ban cha</label>
+                                                <input readonly data-ng-model="vm.departmentDetail.parent.name" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-6">
+                                                <label class="bold">Level</label>
+                                                <input readonly data-ng-model="vm.departmentDetail.level" type="number" class="form-control">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="bold">Thứ tự xuất hiện</label>
+                                                <input readonly data-ng-model="vm.departmentDetail.displayOrder" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-6">
+                                                <label class="bold">Đường dẫn</label>
+                                                <input readonly data-ng-model="vm.departmentDetail.linePath" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div  class="panel panel-default" style="border: solid 1px #cddbd1;">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <a><i class="fa fa-info" aria-hidden="true"></i> Phòng ban con</a>
+                                            </div>
+                                            <div class="col-md-5">
+                                            </div>
+                                            <div class="col-md-2">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button class="btn btn-danger margin-left-10" data-ng-click="vm.deleteDepartments()" ng-if="vm.selecteddepartments.length > 0"><i class="fa fa-trash"></i>Xóa</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body" style="padding: 0 !important;">
+                                        <table id="bsTableControl" bs-table-control="vm.bsTableControl"></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS-->
+<script type="text/ng-template" id="edit_department_modal.html">
+    <div modal-movable>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="$dismiss()" aria-hidden="true"></button>
+            <h4 class="modal-title"><i class="icon-plus"></i> Thêm mới phòng ban</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="bold">Tên phòng ban</label>
+                    <input class="form-control" ng-model="vm.department.name" autofocus />
+                </div>
+                <div class="col-md-4">
+                    <label class="bold">Mã phòng ban</label>
+                    <input class="form-control" ng-model="vm.department.code" />
+                </div>
+                <div class="col-md-2">
+                    <button style="margin-top: 23px;" ng-click="vm.checkDuplicateCode(1,1,vm.department)" type="button" class="btn btn-primary btn-circle"><i class="fa fa-history"></i></button>
+                </div>
+            </div>
+			<div class="row">
+				<div class="col-md-6">
+                    <label class="bold">Chức năng</label>
+                    <ui-select ng-model="vm.department.departmentType" sortable="true" close-on-select="true" style="width: 100% !important;">
+     					<ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+     					<ui-select-choices repeat="so.id as so in vm.typeOption  | propsFilter: {name: $select.search}">
+         				<div class="bold" ng-bind-html="so.name | highlight: $select.search"></div>
+     					</ui-select-choices>
+ 					</ui-select>
+                </div>
+                <div class="col-md-6">
+                    <label class="bold">Phòng ban cha</label>
+                    <ui-select ng-model="vm.department.parent" sortable="true" close-on-select="true" style="width: 100% !important;">
+                        <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="department in vm.departments  | propsFilter: {name: $select.search}">
+                            <div class="bold" ng-bind-html="department.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+			</div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="bold">Thứ tự</label>
+                    <input min="0" data-ng-model="vm.department.displayOrder" type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="bold">Mô tả</label>
+                    <textarea class="form-control" ng-model="vm.department.description" rows="3" style="resize: vertical; overflow-x: hidden"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" ng-click="$dismiss()" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+            <!--<button type="button" ng-click="$close('yes');" class="btn btn-primary" data-dismiss="modal">Lưu</button>-->
+            <button ng-click="vm.checkDuplicateCode(1,2,vm.department)" type="button" class="btn btn-primary">Lưu</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="edit_department_child_modal.html">
+    <div modal-movable>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="$dismiss()" aria-hidden="true"></button>
+            <h4 class="modal-title"><i class="fa fa-pencil-square-o"></i> Cập nhật phòng ban con</h4>
+        </div>
+        <div class="modal-body">
+            <uib-tabset class="text-bold" active="activeForm">
+                <uib-tab index="0" heading="Thông tin chính">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="bold">Tên phòng ban</label>
+                            <input class="form-control" ng-model="vm.departmentChild.name" autofocus />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="bold">Mã phòng ban</label>
+                            <input class="form-control" ng-model="vm.tempCode" />
+                        </div>
+                        <div class="col-md-2">
+                            <button style="margin-top: 23px;" ng-click="vm.checkDuplicateCode(2,1,vm.departmentChild)" type="button" class="btn btn-primary btn-circle"><i class="fa fa-history"></i></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="bold">Chức năng</label>
+                            <ui-select ng-model="vm.departmentChild.departmentType" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="so.id as so in vm.typeOption  | propsFilter: {name: $select.search}">
+                                    <div class="bold" ng-bind-html="so.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="bold">Phòng ban cha</label>
+                            <ui-select ng-model="vm.departmentChild.parent" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="department in vm.departments  | propsFilter: {name: $select.search}">
+                                    <div class="bold" ng-bind-html="department.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="bold">Thứ tự</label>
+                            <input min="0" data-ng-model="vm.departmentChild.displayOrder" type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="bold">Mô tả</label>
+                            <textarea class="form-control" ng-model="vm.departmentChild.description" rows="3" style="resize: vertical; overflow-x: hidden"></textarea>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab ng-if="vm.departmentChild.subDepartments.length > 0" index="1" heading="Thứ tự phòng ban con">
+                    <div class="row form-group">
+                        <div class="col-md-12">
+                            <input type="text" ng-model="vm.searchKeyword"  class="form-control" placeholder="Tìm theo tên, mã..." style="margin-bottom: 10px">
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row form-group margin-left-5 margin-right-5 margin-top-20">
+                                <table class="table table-striped table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên phòng ban</th>
+                                        <th>Mã phòng ban</th>
+                                        <th>Thứ tự</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="e in vm.departmentChild.subDepartments">
+                                        <td>{{$index + 1}}</td>
+                                        <td>{{e.name}}</td>
+                                        <td>{{e.code}}</td>
+                                        <td>
+                                            <input min="0" data-ng-model="e.displayOrder" type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control">
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+        <div class="modal-footer">
+            <button type="button" ng-click="$dismiss()" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+            <!--<button type="button" ng-click="$close('yes');" class="btn btn-primary" data-dismiss="modal">Lưu</button>-->
+            <button ng-click="vm.checkDuplicateCode(2,2,vm.departmentChild)" type="button" class="btn btn-primary">Lưu</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="edit_department_detail_modal.html">
+    <div modal-movable>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="$dismiss()" aria-hidden="true"></button>
+            <h4 class="modal-title"><i class="icon-plus"></i> Cập nhật phòng ban con</h4>
+        </div>
+        <div class="modal-body">
+            <uib-tabset class="text-bold" active="activeForm">
+                <uib-tab index="0" heading="Thông tin chính">
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <label class="bold">Tên phòng ban: </label>
+                            <input data-ng-model="vm.departmentDetail.name" type="text" class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="bold">Mã phòng ban: </label>
+                            <input data-ng-model="vm.tempCodeDetail" type="text" class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <button style="margin-top: 23px;" ng-click="vm.checkDuplicateCodeDetail(2,1,vm.departmentDetail)" type="button" class="btn btn-primary btn-circle"><i class="fa fa-history"></i></button>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <label class="bold">Chức năng</label>
+                            <ui-select ng-model="vm.departmentDetail.departmentType" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="so.id as so in vm.typeOption  | propsFilter: {name: $select.search}">
+                                    <div class="bold" ng-bind-html="so.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="bold">Phòng ban cha</label>
+                            <ui-select ng-model="vm.departmentDetail.parent" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="department in vm.departments  | propsFilter: {name: $select.search}">
+                                    <div class="bold" ng-bind-html="department.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="bold">Thứ tự</label>
+                            <input min="0" data-ng-model="vm.departmentDetail.displayOrder" type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-12">
+                            <label class="bold">Mô tả</label>
+                            <textarea class="form-control" ng-model="vm.departmentDetail.description" rows="3" style="resize: vertical; overflow-x: hidden"></textarea>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab ng-if="vm.departmentDetail.subDepartments.length > 0" index="1" heading="Thư tự phòng ban con">
+                    <div class="row form-group">
+                        <div class="col-md-12">
+                            <input type="text" ng-model="vm.searchKeyword"  class="form-control" placeholder="Tìm theo tên, mã..." style="margin-bottom: 10px">
+                        </div>
+                        <div class="col-md-12">
+                            <div style="height:300px; overflow: auto;"  class="row form-group margin-left-5 margin-right-5 margin-top-20">
+                                <table class="table table-striped table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên phòng ban</th>
+                                        <th>Mã phòng ban</th>
+                                        <th>Thứ tự</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="e in vm.departmentDetail.subDepartments | filter: vm.searchKeyword">
+                                        <td>{{$index + 1}}</td>
+                                        <td>{{e.name}}</td>
+                                        <td>{{e.code}}</td>
+                                        <td>
+                                            <input min="0" data-ng-model="e.displayOrder" type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control">
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+        <div class="modal-footer">
+            <button type="button" ng-click="$dismiss()" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+            <!--<button type="button" ng-click="$close('yes');" class="btn btn-primary" data-dismiss="modal">Lưu</button>-->
+            <button ng-click="vm.checkDuplicateCodeDetail(2,2,vm.departmentDetail)" type="button" class="btn btn-primary">Lưu</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="confirm_delete_modal.html">
+    <div modal-movable>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="$dismiss()" aria-hidden="true"></button>
+            <h4 class="modal-title"><i class="icon-question"></i>Xóa</h4>
+        </div>
+        <div class="modal-body">
+            <p>Bạn có chắc chắn muốn xóa bản ghi đã chọn không?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" ng-click="$dismiss()" class="btn btn-default" data-dismiss="modal">Không</button>
+            <button type="button" ng-click="$close('yes')" class="btn btn-primary" data-dismiss="modal">Có</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="confirm_delete_detail_modal.html">
+    <div modal-movable>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="$dismiss()" aria-hidden="true"></button>
+            <h4 class="modal-title"><i class="icon-question"></i>Xóa</h4>
+        </div>
+        <div class="modal-body">
+            <p>Bạn có chắc chắn muốn xóa <span ng-cloak>{{vm.departmentDetail.name}}</span></p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" ng-click="$dismiss()" class="btn btn-default" data-dismiss="modal">Không</button>
+            <button type="button" ng-click="$close('yes')" class="btn btn-primary" data-dismiss="modal">Có</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="import_modal.html">
+    <div modal-movable>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="$dismiss()" aria-hidden="true"></button>
+            <h4 class="modal-title bold font-yellow-gold"><i class="fa fa-cloud-upload"></i> Import</h4>
+        </div>
+        <div class="modal-body">
+            <div class="box-body box-profile">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a class="dash-box display-block link" ngf-select="uploadFiles($file, $invalidFiles)"
+                               accept="/*" ngf-max-size="{{MAX_FILE_SIZE}}"><i class="fa fa-cloud-upload"></i> Chọn tệp tin để tải lên</a>
+                        </div>
+
+                        <div class="col-md-12 margin-top-20" ng-if="f != null">
+                            Tải tệp tin: {{f.name}}
+                        </div>
+
+                        <div class="col-md-12 margin-top-20" ng-if="errFile != null && errFile.$error != ''">
+                            Có lỗi: <span ng-if="errFile.$error == 'maxSize'">Kích thước tệp tin phải nhỏ hơn {{errFile.$errorParam}}</span>
+                            <span ng-if="errFile.$error != null && errFile.$error != 'maxSize'">Tệp tin {{errFile.name}} có lỗi. Xin mời chọn tệp tin khác.</span>
+                        </div>
+
+                        <div class="col-md-12 margin-top-20" ng-if="f.progress >= 0">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" ng-bind="f.progress + '%'" style="width:{{f.progress}}%">
+                                    {{f.progress}}%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" ng-click="$dismiss()" class="btn btn-default" data-dismiss="modal">Hủy</button>
+            <button type="button" ng-click="$close('yes')" class="btn btn-primary" data-dismiss="modal">Tải lên</button>
+        </div>
+    </div>
+</script>
+<!-- BEGIN MAIN JS -->

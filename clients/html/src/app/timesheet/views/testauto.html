@@ -1,0 +1,31 @@
+<!-- BEGIN PAGE HEADER-->
+<!-- author Giang 21/04/2018 -->
+<div class="page-bar">
+    <h3 class="page-title pull-left"><i class="icon-layers"></i>Quản lý thời lượng làm việc</h3>
+</div>
+
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+<div class="row margin-top-10">
+    <div class="col-md-12">
+    
+        <div class="portlet light bordered">
+            <div class="portlet-body">
+		 		<angucomplete-alt id="searchStaff"
+	              placeholder="remote-api-handler"
+	              pause="500"
+	              selected-object="staff"
+	              remote-api-handler="search1"
+	              remote-url-data-field="content"
+	              title-field="staffCode"
+	              description-field="displayName" minlength="2" 
+	              input-class="form-control form-control-small"
+	              match-class="highlight"
+	              auto-match="true"
+	              />  
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BEGIN MAIN JS -->

@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Built-By: Admin
+Build-Jdk: 17.0.11
+Implementation-Title: mtyt-app
+Implementation-Version: 1.0.0-SNAPSHOT
+Implementation-Vendor-Id: com.globits
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-URL: http://maven.apache.org
+Main-Class: com.globits.mtyt.MTYTApplication
+Created-By: Maven Integration for Eclipse
+

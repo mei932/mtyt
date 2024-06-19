@@ -1,0 +1,42 @@
+[
+  {
+    "id" : 1,
+    "parent" : "#",
+    "text" : "Group 1",
+    "icon": "icon-people",
+    "state": {
+      "opened": true
+    }
+  },
+  {
+    "id" : 2,
+    "parent" : "#",
+    "text" : "Group 2",
+    "icon": "icon-people"
+  },
+  {
+    "id" : 3,
+    "parent" : 1,
+    "text" : "Staff 1",
+    "icon": "icon-user",
+    "state": {
+      "selected": true
+    }
+  },
+  {
+    "id" : 4,
+    "parent" : 1,
+    "text" : "Staff 2",
+    "icon": "icon-user",
+    "state": {
+      "disabled": true,
+      "selected": false
+    }
+  },
+  {
+    "id" : 5,
+    "parent" : 2,
+    "text" : "Staff 3",
+    "icon": "icon-user"
+  }
+]

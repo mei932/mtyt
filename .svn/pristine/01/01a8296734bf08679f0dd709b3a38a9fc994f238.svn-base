@@ -1,0 +1,137 @@
+<!-- BEGIN PAGE HEADER-->
+<!-- author Giang 21/04/2018 -->
+<div class="page-bar">
+    <h3 class="page-title pull-left"><i class="icon-layers"></i>Quản lý thời gian biểu</h3>
+</div>
+
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+<div class="row margin-top-10">
+    <div class="col-md-12">
+    
+        <div class="portlet light bordered">
+            <div class="portlet-body">
+          <div angucomplete-alt 
+	          id="ex6" placeholder="Search Staff" 
+	          pause="500" 
+	          selected-object="selectedProject" 
+	          remote-url="http://localhost:8082/hrm/public/staff" 
+	          remote-url-request-formatter="remoteUrlRequestFn" 
+	          remote-url-data-field="content" 
+	          title-field="staffCode" 
+	          description-field="displayName" minlength="2" 
+	          input-class="form-control form-control-small" 
+	          match-class="highlight">
+		   </div>         
+                <div class="btn-group pull-left margin-top-10 margin-bottom-10">
+                    <button class="btn btn-default" data-ng-click="vm.newTimeSheet()"><i class="fa fa-plus-circle"></i>Thêm mới</button>
+                    <button class="btn btn-danger margin-left-10" data-ng-click="vm.deleteTimeSheets()" data-ng-disabled="vm.selectedTimeSheets.length <= 0"><i class="fa fa-trash"></i>Xóa</button>
+                </div>
+
+                <table id="bsTableControl" bs-table-control="vm.bsTableControl"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS-->
+<script type="text/ng-template" id="edit_time_sheet_modal.html">
+    <div modal-movable>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="$dismiss()" aria-hidden="true"></button>
+            <h4 class="modal-title" data-ng-if="vm.timeSheet.isNew == true"><i class="icon-plus"></i>Thêm ca làm việc</h4>
+            <h4 class="modal-title" data-ng-if="vm.timeSheet.isNew == false"><i class="fa fa-pencil-square-o"></i>Cập nhật ca làm việc</h4>
+        </div>
+        <div class="modal-body">
+			<div class="row">
+				<div class="col-xs-7">
+					<label class="bold">Tên nhân viên</label>
+					<input type="text" readonly class="form-control" ng-model="vm.timeSheet.employee.displayName" />
+				</div>
+				<div class="col-xs-2" style="margin-top:24px;">
+                	<button type="button" ng-click="vm.openSearchStaffModal()" class="btn btn-default" >Tìm kiếm</button>
+				</div>
+			</div>
+
+            <div class="row">
+                <div class="col-xs-3" style="margin-top:14px;">
+					<label class="bold">Thời gian bắt đầu</label>
+					<input type="text" class="form-control" ng-model="vm.timeSheet.startTime" ng-change="vm.changed()" data-ng-value="vm.timeSheet.startTime | date: 'dd/MM/yyyy'" my-date-picker />
+				</div>
+				<div class="col-xs-2">
+					<uib-timepicker template-url="gtemplate/timepicker2.html" ng-model="vm.timeSheet.startTime" ng-change="vm.changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
+				</div>
+                <div class="col-xs-3" style="margin-top:14px;margin-left:30px;">
+                    <label class="bold">Thời gian kết thúc</label>
+					<input type="text" class="form-control" ng-model="vm.timeSheet.endTime" ng-change="vm.changed()" data-ng-value="vm.timeSheet.endTime | date: 'dd/MM/yyyy'" my-date-picker />
+                </div>
+				<div class="col-xs-2">
+					<uib-timepicker template-url="gtemplate/timepicker2.html" ng-model="vm.timeSheet.endTime" ng-change="vm.changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
+				</div>
+			</div>
+			<div class="row">
+                <div class="col-xs-7">
+                    <label class="bold">Tổng thời gian làm việc (giờ)</label>
+                    <input class="form-control" ng-model="vm.timeSheet.totalHours" readonly />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" ng-click="$dismiss()" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+            <button type="button" ng-click="$close('yes');" class="btn btn-primary" data-dismiss="modal">Lưu</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="confirm_delete_modal.html">
+    <div modal-movable>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="$dismiss()" aria-hidden="true"></button>
+            <h4 class="modal-title"><i class="icon-question"></i>Xóa</h4>
+        </div>
+        <div class="modal-body">
+            <p>Bạn có chắc chắn muốn xóa <span ng-cloak>{{vm.selectedTimeSheets.length}}</span> bản ghi đã chọn không?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" ng-click="$dismiss()" class="btn btn-default" data-dismiss="modal">Không</button>
+            <button type="button" ng-click="$close('yes')" class="btn btn-primary" data-dismiss="modal">Có</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="search_staff_modal.html">
+    <div modal-movable>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="$dismiss()" aria-hidden="true"></button>
+            <h4 class="modal-title"><i class="glyphicon glyphicon-search"></i>Tìm kiếm nhân viên</h4>
+        </div>
+		<div class="modal-body">
+			<div class="row">
+				<div class="col-xs-7">
+					<label class="bold">Họ và tên</label>
+					<input type="text" class="form-control" ng-model="vm.staff.displayName" dl-enter-key="vm.findStaff()"/>
+				</div>
+				<div class="col-xs-2" style="margin-top:24px;">
+                	<button type="button" ng-click="vm.findStaff()" class="btn btn-default glyphicon glyphicon-search" >Tìm</button>
+				</div>
+				<div style="margin-top:80px;">
+					<table id="bsTableControlSearchStaff" bs-table-control="vm.bsTableControlSearchStaff"></table>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+            <button type="button" ng-click="$dismiss()" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" ng-click="$close('yes')" class="btn btn-primary" data-dismiss="modal">OK</button>
+        </div>
+    </div>
+</script>
+<style>
+.modal-md{
+	width:60%;
+}
+.modal-sm{
+	width:50%;
+}
+</style>
+<!-- BEGIN MAIN JS -->

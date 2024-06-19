@@ -1,0 +1,756 @@
+<!-- BEGIN PAGE HEADER-->
+<!--<div class="page-bar">-->
+<!--<h3 class="page-title pull-left"><i class="icon-layers"></i>Danh mục Nhân viên</h3>-->
+<!--<ul class="page-breadcrumb pull-right hidden-xs">-->
+<!--<li>-->
+<!--<a href="#">Quản trị</a>-->
+<!--<i class="fa fa-circle"></i>-->
+<!--</li>-->
+<!--<li>-->
+<!--<a href="#">Danh mục</a>-->
+<!--<i class="fa fa-circle"></i>-->
+<!--</li>-->
+<!--<li>-->
+<!--<a href="#/staff">Nhân viên</a>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
+<!-- TA2 them 22/04/2018-->
+<!-- END PAGE HEADER-->
+
+
+<!-- BEGIN MAIN CONTENT -->
+<div class="row margin-top-10">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-body">
+                <div class="row margin-top-10 margin-bottom-10">
+                    <div style="height:700px; overflow: auto;border: solid 1px rgba(230, 238, 238, 0.55)" class="col-xs-4">
+                        <div class="panel panel-default">
+                            <div class="row form-group" style="margin-top: 15px">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" ng-model="search" ng-keyup="applySearch(search)"
+                                        placeholder="Tìm theo tên">
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div tree-plugins="search" js-tree="treeConfig" ng-model="vm.treeData" tree="treeInstance"
+                                    tree-events="select_node:selectNode;ready:readyCB"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-8">
+                        <div class="row margin-top-10 margin-bottom-10">
+                            <div class="col-md-6">
+                                <div class="btn-group">
+                                    <button class="btn btn-default" data-ng-click="vm.newStaff()"><i class="fa fa-plus-circle"></i>Thêm
+                                        mới</button>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-default" data-ng-click="vm.importStaff()"><i class="fa fa-cloud-upload"></i>
+                                        Import</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input type="text" data-ng-model="vm.textSearch" class="form-control" placeholder="Tìm theo mã nhân sự"
+                                        name="search">
+                                    <div class="input-group-btn">
+                                        <button ng-click="vm.searchByCode()" class="btn btn-default" type="submit"><i
+                                                class="glyphicon glyphicon-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="bsTableControl" bs-table-control="vm.bsTableControl"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="staff_modal.html">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+<script type="text/ng-template" id="edit_staff_modal.html">
+<div modal-movable>
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()" aria-hidden="true"></button>
+    <h4 class="modal-title bold font-yellow-gold"><i class="fa fa-plus-circle"></i>Thêm/sửa nhân viên</h4>
+</div>
+<div class="modal-body">
+    <div class="box-body box-profile">
+        <div class="box-body">
+            <div class="row form-group">
+                <uib-tabset class="text-bold" active="activeForm">
+                    <uib-tab index="0" heading="Thông tin cá nhân">
+                        <div class="panel panel-default" style="border: solid 1px #cddbd1;">
+                            <!--  ================= Personal information =================== -->
+                            <!--  ================================================ -->
+                            <div class="panel-heading text-center">Thông tin cá nhân</div>
+                            <div class="panel-body">
+                                <div class="row form-group">
+                                    <div class="col-xs-6 col-md-2">
+                                        <div class="left-profile image-profile text-center"
+                                             ng-model="vm.file"
+                                             ngf-select="vm.selectFiles($files, $invalidFiles)"
+                                             accept="*image/*"
+                                             ngf-max-size="10MB">
+                                            <p ng-if="vm.file.length <= 0">image here</p>
+                                            <img ngf-src="vm.file" ngf-accept="'image/*'" style="width: 150px; height:200px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        	<div class="row form-group">
+		                                        <div class="col-md-3">
+		                                        <label class="bold">Mã công chức: </label>
+		                                        <input data-ng-model="vm.staff.staffCode" type="text" class="form-control">
+		                                    </div>
+                                            <div class="col-md-3">
+                                                <label class="bold">Họ: </label>
+                                                <input data-ng-model="vm.staff.lastName" ng-change="vm.nameChange()" type="text" class="form-control">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="bold">Tên: </label>
+                                                <input data-ng-model="vm.staff.firstName" ng-change="vm.nameChange()" type="text" class="form-control">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="bold">Họ và tên: </label>
+                                                <input data-ng-model="vm.staff.displayName" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-4">
+                                                <label class="bold">Ngày sinh: </label>
+                                                <input type="text" class="form-control" data-ng-model="vm.staff.birthDate" my-date-picker />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Nơi sinh: </label>
+                                                <input data-ng-model="vm.staff.birthPlace" type="text" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Số điện thoại: </label>
+                                                <input data-ng-model="vm.staff.phoneNumber" type="text" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Số CMND: </label>
+                                                <input data-ng-model="" type="text" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Ngày cấp: </label>
+                                                <input data-ng-model="" type="text" class="form-control" my-date-picker>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Nơi cấp: </label>
+                                                <input data-ng-model="" type="text" class="form-control">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="bold">Giới tính: </label>
+                                                <ui-select data-ng-model="vm.staff.gender" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                                    <ui-select-match allow-clear="true" placeholder="">{{$select.selected.name}}</ui-select-match>
+                                                    <ui-select-choices repeat="gender.value as gender in vm.genders | propsFilter: {name: $select.search}">
+                                                        <div class="bold" ng-bind-html="gender.name | highlight: $select.search"></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <label class="bold">Hộ khẩu thường chú: </label>
+                                                <input data-ng-model="" type="text" class="form-control">
+                                            </div>
+                                            <div class="col-md-5">
+                                                <label class="bold">Nơi ở hiện nay: </label>
+                                                <input data-ng-model="" type="text" class="form-control">
+                                            </div>
+                                            <div class="col-md-12"> </div>
+                                        </div>
+
+
+
+                                        <div class="row form-group">
+                                            <div class="col-md-4">
+                                                <label class="bold">Tỉnh/thành phố: </label>
+                                                <ui-select data-ng-model="" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                                    <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                                                    <ui-select-choices repeat="">
+                                                        <div class="bold" ng-bind-html=""></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Quận/huyện: </label>
+                                                <input data-ng-model="" type="text" class="form-control" my-date-picker>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Xã/Phường: </label>
+                                                <input data-ng-model="" type="text" class="form-control" my-date-picker>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Dân tộc: </label>
+                                                <ui-select data-ng-model="vm.staff.ethnics" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                                    <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                                                    <ui-select-choices repeat="ethnic in vm.ethnics | propsFilter: {name: $select.search}">
+                                                        <div class="bold" ng-bind-html="ethnic.name | highlight: $select.search"></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Tôn giáo: </label>
+                                                <ui-select data-ng-model="vm.staff.religion" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                                    <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                                                    <ui-select-choices repeat="religion in vm.religions | propsFilter: {name: $select.search}">
+                                                        <div class="bold" ng-bind-html="religion.name | highlight: $select.search"></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Tài khoản hành chính: </label>
+                                                <input data-ng-model="" type="text" class="form-control" my-date-picker>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Gia đình xuất thân: </label>
+                                                <ui-select data-ng-model="" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                                    <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                                                    <ui-select-choices repeat="">
+                                                        <div class="bold" ng-bind-html=""></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Gia đình thuộc diện ưu tiên: </label>
+                                                <ui-select data-ng-model="" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                                    <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                                                    <ui-select-choices repeat="">
+                                                        <div class="bold" ng-bind-html=""></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Diện ưu tiên bản thân: </label>
+                                                <ui-select data-ng-model="" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                                    <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                                                    <ui-select-choices repeat="">
+                                                        <div class="bold" ng-bind-html=""></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Tình trạng hôn nhân: </label>
+                                                <ui-select data-ng-model="" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                                    <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                                                    <ui-select-choices repeat="">
+                                                        <div class="bold" ng-bind-html=""></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Điện thoại: </label>
+                                                <input data-ng-model="" type="text" class="form-control" my-date-picker>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Email: </label>
+                                                <input data-ng-model="" type="text" class="form-control" my-date-picker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        
+                        <div class="panel panel-default" style="border: solid 1px #cddbd1;">
+                            <!--  ================= Personal information =================== -->
+                            <!--  ================================================ -->
+                            <div class="panel-heading text-center">Thông tin hợp đồng</div>
+                            <div class="panel-body">
+                                <div class="row form-group">
+                                    <div class="col-xs-6 col-md-2">
+                                        <div class="left-profile image-profile text-center"
+                                             ng-model="vm.file"
+                                             ngf-select="vm.selectFiles($files, $invalidFiles)"
+                                             accept="*image/*"
+                                             ngf-max-size="10MB">
+                                            <p ng-if="vm.file.length <= 0">image here</p>
+                                            <img ngf-src="vm.file" ngf-accept="'image/*'" style="width: 150px; height:200px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row form-group">
+                                            <div class="col-md-3">
+                                            <label class="bold">Đơn vị: </label>
+                                            <input data-ng-model="" type="text" class="form-control">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="bold">Ngày tuyển dụng: </label>
+                                                <input data-ng-model=""  type="text" class="form-control" my-date-picker>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="bold">Ngày hhợp đồng: </label>
+                                                <input data-ng-model=""  type="text" class="form-control" my-date-picker>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="bold">Ngày CQ hiện nay: </label>
+                                                <input type="text" class="form-control" data-ng-model="" my-date-picker />
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-4">
+                                                <label class="bold">Chức vụ cao nhất: </label>
+                                                <input data-ng-model="" type="text" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Số BHXH: </label>
+                                                <input data-ng-model="" type="text" class="form-control" my-date-picker>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="bold">Hệ số phụ cấp: </label>
+                                                <input data-ng-model="" type="number" class="form-control">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="bold">Bậc lương: </label>
+                                                <input data-ng-model="" type="number" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Mã VC: </label>
+                                                <input data-ng-model="" type="text" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Ngạch VC: </label>
+                                                <input data-ng-model="" type="text" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Chức danh chuyên môn: </label>
+                                                <input data-ng-model="" type="text" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Ngày nhận: </label>
+                                                <input data-ng-model="" type="text" class="form-control" my-date-picker>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Ngày hưởng: </label>
+                                                <input data-ng-model="" type="text" class="form-control" my-date-picker>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Hệ số: </label>
+                                                <input data-ng-model="" type="text" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Nghề nghiệp khi tuyển dụng: </label>
+                                                <input data-ng-model="" type="text" class="form-control" >
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Số QĐ chức vụ: </label>
+                                                <input data-ng-model="" type="text" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Ngày hưởng: </label>
+                                                <input data-ng-model="" type="text" class="form-control" my-date-picker>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Loại hợp đồng: </label>
+                                                <ui-select data-ng-model="" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                                    <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                                                    <ui-select-choices repeat="">
+                                                        <div class="bold" ng-bind-html=""></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Loại viên chức: </label>
+                                                <ui-select data-ng-model="" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                                    <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                                                    <ui-select-choices repeat="">
+                                                        <div class="bold" ng-bind-html=""></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="bold">Công việc được giao: </label>
+                                                <ui-select data-ng-model="" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                                    <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                                                    <ui-select-choices repeat="">
+                                                        <div class="bold" ng-bind-html=""></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                        </div>
+
+                                       
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+
+                        <!--  ================= University information =================== -->
+                        <!--  ================================================ -->
+                    </uib-tab>
+
+                    <!--  ================= Register - Tab 2 =================== -->
+                    <!--  ====================================================== -->
+
+                    <uib-tab index="1" heading="Tài khoản đăng nhập">
+                        <div class="panel panel-default" style="border: solid 1px #cddbd1;" ng-if="vm.isAdd">
+                            <div class="panel-heading text-center"> Đăng ký</div>
+                            <div class="panel-body">
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label class="bold">Tên đăng nhập: </label>
+                                        <input data-ng-model="vm.staff.user.username" type="text" class="form-control">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="bold">Email: </label>
+                                        <input data-ng-model="vm.staff.user.email" class="form-control">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="bold">Mật khẩu: </label>
+                                        <input data-ng-model="vm.staff.user.password" type="password"  class="form-control">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="bold">Nhập lại mật khẩu: </label>
+                                        <input data-ng-model="vm.staff.user.confirmPassword" type="password" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label class="bold">Phân quyền: </label>
+                                        <ui-select multiple data-ng-model="vm.staff.user.roles" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                            <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$item.name}}</ui-select-match>
+                                            <ui-select-choices repeat="role in vm.roles | propsFilter: {name: $select.search}">
+                                                <div class="bold" ng-bind-html="role.name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+						<div class="panel panel-default" style="border: solid 1px #cddbd1;" ng-if="vm.isView">
+                            <div class="panel-heading text-center"> Đăng ký</div>
+                            <div class="panel-body">
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label class="bold">Tên đăng nhập: </label>
+                                        <input readonly data-ng-model="vm.staff.user.username" type="text" class="form-control">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="bold">Email: </label>
+                                        <input readonly data-ng-model="vm.staff.user.email" class="form-control">
+                                    </div>
+                                    <!--<div class="col-md-12">-->
+                                        <!--<label class="bold">Mật khẩu: </label>-->
+                                        <!--<input readonly data-ng-model="vm.staff.user.password" type="password"  class="form-control">-->
+                                    <!--</div>-->
+                                    <!--<div class="col-md-12">-->
+                                        <!--<label class="bold">Nhập lại mật khẩu: </label>-->
+                                        <!--<input data-ng-model="vm.staff.user.confirmPassword" type="password" class="form-control">-->
+                                    <!--</div>-->
+
+                                    <div class="col-md-12">
+                                        <label class="bold">Phân quyền: </label>
+                                        <ui-select ng-disabled="true" multiple data-ng-model="vm.staff.user.roles" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                            <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$item.name}}</ui-select-match>
+                                            <ui-select-choices repeat="role in vm.roles | propsFilter: {name: $select.search}">
+                                                <div class="bold" ng-bind-html="role.name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="panel panel-default" style="border: solid 1px #cddbd1;" ng-if="vm.isEdit">
+                                <div class="panel-heading text-center"> Đăng ký</div>
+                                <div class="panel-body">
+                                    <div class="row form-group">
+                                        <div class="col-md-12">
+                                            <label class="bold">Tên đăng nhập: </label>
+                                            <input data-ng-model="vm.staff.user.username" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="bold">Email: </label>
+                                            <input data-ng-model="vm.staff.user.email" class="form-control">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="bold">Đổi mật khẩu: </label>
+                                            <input data-ng-model="vm.isChangePassword" ng-change="vm.setPassWordNull()" type="checkbox">
+                                        </div>
+                                        <div ng-if="vm.isChangePassword == true" class="col-md-12">
+                                            <label class="bold">Mật khẩu: </label>
+                                            <input data-ng-model="vm.staff.user.password" type="password" class="form-control">
+                                        </div>
+                                        <div ng-if="vm.isChangePassword == true" class="col-md-12">
+                                            <label class="bold">Nhập lại mật khẩu: </label>
+                                            <input data-ng-model="vm.staff.user.confirmPassword" type="password" class="form-control">
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <label class="bold">Phân quyền: </label>
+                                            <ui-select multiple data-ng-model="vm.staff.user.roles" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                                <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$item.name}}</ui-select-match>
+                                                <ui-select-choices repeat="role in vm.roles | propsFilter: {name: $select.search}">
+                                                    <div class="bold" ng-bind-html="role.name | highlight: $select.search"></div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </uib-tab>
+							
+                    <uib-tab index="2" heading="Địa chỉ">
+                        <div class="panel panel-default" style="border: solid 1px #cddbd1;">
+                            <div class="panel-heading text-center"> Địa chỉ</div>
+                            <div class="panel-body">
+                                <div class="row form-group">
+                                    <div class="col-md-5">
+                                        <label class="bold">Quốc gia: </label>
+                                        <ui-select data-ng-model="vm.address.country" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                            <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices repeat="country in vm.countries | propsFilter: {name: $select.search}">
+                                                <div class="bold" ng-bind-html="country.name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label class="bold">Tỉnh thành: </label>
+                                        <ui-select data-ng-model="vm.address.province" on-select="vm.onProvinceChange()" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                            <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices repeat="province in vm.provinces | propsFiltersForProvince: {name: $select.search}">
+                                                <div class="bold" ng-bind-html="province.name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-5">
+                                        <label class="bold">Quận huyện: </label>
+                                        <ui-select data-ng-model="vm.address.city" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                            <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices repeat="city in vm.cities | propsFilter: {name: $select.search}">
+                                                <div class="bold" ng-bind-html="city.name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label class="bold">Phường xã: </label>
+                                        <ui-select data-ng-model="vm.data" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                            <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.subjectName}}</ui-select-match>
+                                            <ui-select-choices repeat="subject in vm.subjects | propsFilter: {subjectName: $select.search}">
+                                                <div class="bold" ng-bind-html="subject.subjectName | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-1">
+                                        <button title="Thêm!" ng-click="vm.addAddress()" type="button" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                                <div ng-if="vm.staff.address.length > 0" class="row form-group margin-left-5 margin-right-5 margin-top-20">
+                                    <table class="table table-striped text-center">
+                                        <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Quốc gia</th>
+                                            <th>Tỉnh, Thành phố</th>
+                                            <th>Hành động</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="e in vm.staff.address">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{e.country}}</td>
+                                            <td>{{e.province}}</td>
+                                            <td>
+                                                <a ng-click="vm.removeAddress($index)"><i class="fa fa-times"></i></a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </uib-tab>
+
+                    <uib-tab index="3" heading="Chức vụ công tác">
+                        <div class="panel panel-default" style="border: solid 1px #cddbd1;">
+                            <div class="panel-heading text-center"> Địa chỉ</div>
+                            <div class="panel-body">
+                                <div class="row form-group">
+                                    <div class="col-md-3">
+                                        <label class="bold">Tên chức vụ: </label>
+                                        <ui-select data-ng-model="vm.staffPosition.position" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                            <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices repeat="position in vm.positionTitles | propsFilter: {name: $select.search}">
+                                                <div class="bold" ng-bind-html="position.name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="bold">Khoa: </label>
+                                        <ui-select data-ng-model="vm.staffPosition.department" sortable="true" close-on-select="true" style="width: 100% !important;">
+                                            <ui-select-match allow-clear="true" placeholder="Xin mời chọn...">{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices repeat="department in vm.departments | propsFiltersForProvince: {name: $select.search}">
+                                                <div class="bold" ng-bind-html="department.name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="bold">Ngày bắt đầu: </label>
+                                        <input type="text" class="form-control" data-ng-model="vm.staffPosition.fromDate" my-date-picker />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="bold">Ngày kết thúc: </label>
+                                        <input type="text" class="form-control" data-ng-model="vm.staffPosition.toDate" my-date-picker />
+                                    </div>
+                                    <div class="col-md-1" style="margin-top: 24px">
+                                        <button title="Thêm!" ng-click="vm.addStaffPosition()" type="button" class="btn btn-primary btn-circle"><i class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group margin-left-5 margin-right-5 margin-top-20">
+                                    <table class="table table-striped text-center">
+                                        <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Tên chức vụ</th>
+                                            <th>Phòng ban</th>
+                                            <th>Từ ngày</th>
+                                            <th>Đến ngày</th>
+                                            <th>Vị trí chính</th>
+                                            <th>Hiện thời</th>
+                                            <th>Hành động</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="s in vm.staff.positions">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{s.position.name}}</td>
+                                            <td>{{s.department.name}}</td>
+                                            <td>{{s.fromDate | date: 'dd/MM/yyyy'}}</td>
+                                            <td>{{s.toDate | date: 'dd/MM/yyyy'}}</td>
+                                            <td>
+                                                <input type="checkbox" ng-click="vm.setMainPosition($index)" ng-model="s.mainPosition">
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" ng-click="vm.setCurrent($index)" ng-model="s.current">
+                                            </td>
+                                            <td>
+                                                <a ng-click="vm.removeStaffPosition($index)"><i class="fa fa-times"></i></a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </uib-tab>
+                </uib-tabset>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" ng-click="$dismiss()" class="btn btn-default" data-dismiss="modal">Hủy</button>
+    <button type="button" ng-click="$close('yes')" class="btn btn-primary" data-dismiss="modal">Lưu</button>
+</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="confirm_delete_modal.html">
+    <div modal-movable>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="$dismiss()" aria-hidden="true"></button>
+            <h4 class="modal-title"><i class="icon-question"></i>Xóa</h4>
+        </div>
+        <div class="modal-body">
+            <p>Bạn có chắc chắn muốn xóa <span ng-cloak>{{vm.selectedstaffs.length}}</span> bản ghi đã chọn không?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" ng-click="$dismiss()" class="btn btn-default" data-dismiss="modal">Không</button>
+            <button type="button" ng-click="$close('yes')" class="btn btn-primary" data-dismiss="modal">Có</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="import_modal.html">
+    <div modal-movable>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="$dismiss()" aria-hidden="true"></button>
+            <h4 class="modal-title bold font-yellow-gold"><i class="fa fa-cloud-upload"></i> Import</h4>
+        </div>
+        <div class="modal-body">
+            <div class="box-body box-profile">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a class="dash-box display-block link" ngf-select="uploadFiles($file, $invalidFiles)"
+                               accept="/*" ngf-max-size="{{MAX_FILE_SIZE}}"><i class="fa fa-cloud-upload"></i> Chọn tệp tin để tải lên</a>
+                        </div>
+
+                        <div class="col-md-12 margin-top-20" ng-if="f != null">
+                            Tải tệp tin: {{f.name}}
+                        </div>
+
+                        <div class="col-md-12 margin-top-20" ng-if="errFile != null && errFile.$error != ''">
+                            Có lỗi: <span ng-if="errFile.$error == 'maxSize'">Kích thước tệp tin phải nhỏ hơn {{errFile.$errorParam}}</span>
+                            <span ng-if="errFile.$error != null && errFile.$error != 'maxSize'">Tệp tin {{errFile.name}} có lỗi. Xin mời chọn tệp tin khác.</span>
+                        </div>
+
+                        <div class="col-md-12 margin-top-20" ng-if="f.progress >= 0">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" ng-bind="f.progress + '%'" style="width:{{f.progress}}%">
+                                    {{f.progress}}%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" ng-click="$dismiss()" class="btn btn-default" data-dismiss="modal">Hủy</button>
+            <button type="button" ng-click="$close('yes')" class="btn btn-primary" data-dismiss="modal">Tải lên</button>
+        </div>
+    </div>
+</script>
+<style>
+    .modal-lg {
+        width: 70%;
+    }
+
+    @media only screen and (max-width: 768px) {
+        .modal-lg {
+            width: 100%;
+        }
+    }
+</style>
+<!-- BEGIN MAIN JS -->

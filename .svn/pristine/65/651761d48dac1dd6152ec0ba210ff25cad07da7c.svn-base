@@ -1,0 +1,249 @@
+<div class="page-sidebar navbar-collapse collapse">
+    <!-- BEGIN SIDEBAR MENU -->
+    <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+    <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+    <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+    <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+    <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+    <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+    <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
+        <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
+        <li class="heading">
+            <h3 class="uppercase">QUẢN LÝ NHÂN SỰ</h3>
+        </li>
+        <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-grid"></i>
+                <span class="title">Trang chủ</span>
+                <span></span>
+            </a>   
+          </li> 
+          
+         <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-grid"></i>
+                <span class="title">Nhân sự</span>
+                <span></span>
+            </a>   
+            <ul class="sub-menu">
+                <li>
+                    <a href="#/staff">
+                        <i class="fa fa-caret-right"></i> Thông tin nhân sự
+                    </a>
+                </li>
+                
+             </ul>                
+          </li>   
+         <li class="nav-item">
+            <a href="#/staff" class="nav-link nav-toggle">
+                <i class="icon-grid"></i>
+                <span class="title">Quản lý hợp đồng</span>
+                <span></span>
+            </a>   
+          </li>      
+         <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-grid"></i>
+                <span class="title">Tiền lương</span>
+                <span></span>
+            </a>   
+            <ul class="sub-menu">
+                <li>
+                    <a href="#/payroll/setup_salary">
+                        <i class="fa fa-caret-right"></i> Cấu hình tính lương
+                    </a>
+                </li>
+                <li>
+                    <a href="#/salaryitem">
+                        <i class="fa fa-caret-right"></i> Danh mục phần tử lương
+                    </a>
+                </li>
+                <li>
+                    <a href="#/salaryconfig">
+                        <i class="fa fa-caret-right"></i> Danh mục cấu hình lương
+                    </a>
+                </li>
+                <li>                    
+                    <a href="#/salaryincrementtype">
+                        <i class="fa fa-caret-right"></i> Danh mục loại tăng lương
+                    </a>
+                </li>  
+                
+             </ul>                
+          </li>                              
+        <li class="nav-item">
+
+            
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-grid"></i>
+                <span class="title">Danh mục</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="#/positiontitle">
+                        <i class="fa fa-caret-right"></i>Danh mục chức vụ
+                    </a>
+                </li>
+                <li>
+                    <a href="#/civilservantgrade/civilservantgrade-system">
+                        <i class="fa fa-caret-right"></i>Cấp bậc công chức
+                    </a>
+                </li>
+                <li>
+                    <a href="#/civilservantcategory/civilservantcategory-system">
+                        <i class="fa fa-caret-right"></i>Danh mục loại công chức
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#/department">
+                        <i class="fa fa-caret-right"></i> Danh mục phòng ban
+                    </a>
+                </li>
+                <!-- <li>
+                    <a href="#/salaryitem">
+                        <i class="fa fa-caret-right"></i> Danh mục phần tử lương
+                    </a>
+
+                </li> -->
+                <li>
+                    <a href="#/religion">
+                        <i class="fa fa-caret-right"></i> Danh mục tôn giáo
+                    </a>
+                </li>                                
+
+                </li>  
+                <!-- <li>
+                    <a href="#/salaryconfig">
+                        <i class="fa fa-caret-right"></i> Danh mục cấu hình lương
+                    </a>
+                </li>  -->  
+                 <li>
+                    <a href="#/educationdegree">
+                        <i class="fa fa-caret-right"></i> Danh mục bằng cấp
+                    </a>
+                </li>  
+                <li>
+                    <a href="#/academictitle">
+                        <i class="fa fa-caret-right"></i> Danh mục học hàm học vị
+                    </a>
+                </li>  
+                <li>
+                    <a href="#/shiftwork">
+                        <i class="fa fa-caret-right"></i> Danh mục ca làm việc
+                    </a>
+                 </li>
+                 <li>                    
+                    <a href="#/overtimetype">
+                        <i class="fa fa-caret-right"></i> Danh mục làm ngoài giờ
+                    </a>
+                </li>           
+                <!-- <li>                    
+                    <a href="#/salaryincrementtype">
+                        <i class="fa fa-caret-right"></i> Danh mục loại tăng lương
+                    </a>
+                </li>  --> 
+                <li>                    
+                    <a href="#/specialityadmissionsmap">
+                        <i class="fa fa-caret-right"></i> Danh mục cấu hình mã ngành tuyển sinh
+                    </a>
+                </li>  
+
+            </ul>
+        </li>
+        <!-- <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-grid"></i>
+                <span class="title">Má»¥c lá»¥c ngĂ¢n sĂ¡ch</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-caret-right"></i> Má»¥c - tiá»ƒu má»¥c
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-caret-right"></i> ChÆ°Æ¡ng
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-caret-right"></i> Loáº¡i khoáº£n
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-caret-right"></i> NhĂ³m má»¥c
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-caret-right"></i> Khoáº£n chi xĂ¢y dá»±ng cÆ¡ báº£n
+                    </a>
+                </li>
+            </ul>
+        </li> -->
+        <!-- <li class="heading">
+            <h3 class="uppercase">CHá»¨NG Tá»ª</h3>
+        </li> -->
+        <!-- <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-grid"></i>
+                <span class="title">Dá»± toĂ¡n</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-caret-right"></i> Dá»± toĂ¡n Ä‘áº§u nÄƒm
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-caret-right"></i> Dá»± toĂ¡n bá»• sung
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-caret-right"></i> Há»§y dá»± toĂ¡n
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-caret-right"></i> KhĂ´i phá»¥c dá»± toĂ¡n
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-caret-right"></i> Dá»± toĂ¡n giá»¯ láº¡i
+                    </a>
+                </li>
+            </ul>
+        </li> -->
+        <!-- <li class="heading">
+            <h3 class="uppercase">Há»† THá»�NG</h3>
+        </li>
+        <li class="nav-item">
+            <a href="#">
+                <i class="icon-settings"></i>
+                <span class="title">Má»Ÿ dá»¯ liá»‡u</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#">
+                <i class="icon-settings"></i>
+                <span class="title">Ä�Ă³ng dá»¯ liá»‡u</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#/settings">
+                <i class="icon-settings"></i>
+                <span class="title">Thiáº¿t láº­p há»‡ thá»‘ng</span>
+            </a>
+        </li> -->
+    </ul>
+    <!-- END SIDEBAR MENU -->
+</div>

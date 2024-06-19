@@ -1,0 +1,98 @@
+<!-- BEGIN PAGE HEADER-->
+<!--<div class="page-bar">-->
+    <!--<h3 class="page-title pull-left"><i class="icon-layers"></i>Bậc công chức</h3>-->
+    <!--<ul class="page-breadcrumb pull-right hidden-xs">-->
+        <!--<li>-->
+            <!--<a href="#">Quản trị</a>-->
+            <!--<i class="fa fa-circle"></i>-->
+        <!--</li>-->
+        <!--<li>-->
+            <!--<a href="#">Danh mục</a>-->
+            <!--<i class="fa fa-circle"></i>-->
+        <!--</li>-->
+        <!--<li>-->
+            <!--<a href="#/civilservantgrade/civilservantgrade-system">Bậc công chức</a>-->
+        <!--</li>-->
+    <!--</ul>-->
+<!--</div>-->
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+<div class="row margin-top-10">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-body">
+                <div class="btn-group pull-left margin-top-10 margin-bottom-10">
+                    <button class="btn btn-default" data-ng-click="vm.newCivilServantGrade()"><i class="fa fa-plus-circle"></i>Thêm mới</button>
+                    <button class="btn btn-danger margin-left-10" data-ng-click="vm.deleteCivilServantGrades()" data-ng-disabled="vm.selectedCivilServantGrades.length <= 0"><i class="fa fa-trash"></i>Xóa</button>
+                </div>
+                <table id="bsTableControl" bs-table-control="vm.bsTableControl"></table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS-->
+<script type="text/ng-template" id="edit_civilservantgrade_modal.html">
+    <div modal-movable>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="$dismiss()" aria-hidden="true"></button>
+            <h4 class="modal-title" data-ng-if="vm.civilservantgrade.isNew == true"><i class="icon-plus"></i>Thêm mới Bậc công chức</h4>
+            <h4 class="modal-title" data-ng-if="vm.civilservantgrade.isNew == false"><i class="fa fa-pencil-square-o"></i>Cập nhật Bậc công chức</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <label class="bold">Mã Bậc công chức</label>
+                    <input class="form-control" ng-model="vm.civilservantgrade.code" autofocus />
+                </div>
+                <div class="col-xs-12">
+                    <label class="bold">Tên Bậc công chức</label>
+                    <input class="form-control" ng-model="vm.civilservantgrade.name" />
+                </div>
+                <div class="col-xs-12">
+                    <label class="bold">Bậc hiện tại</label>
+                    <input class="form-control" ng-model="vm.civilservantgrade.grade" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46" min="0" type="number" autofocus />
+                </div>
+                <div class="col-xs-12">
+                    <label class="bold">Bậc tiếp theo</label>
+                    <input class="form-control" ng-model="vm.civilservantgrade.nextGradeId" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46" min="0" type="number"/>
+                </div>
+                <div class="col-xs-12">
+                    <label class="bold">Bậc cao nhất</label>
+                    <input class="form-control" ng-model="vm.civilservantgrade.maxGrade" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46" min="0" type="number"/>
+                </div>
+                <div class="col-xs-12">
+                    <label class="bold">Hệ số lương</label>
+                    <input class="form-control" ng-model="vm.civilservantgrade.salaryCoefficient" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46" min="0" type="number"/>
+                </div>
+            </div>
+            <div class="row margin-top-20">
+                <div class="col-xs-12">
+                    <label class="bold">Mô tả</label>
+                    <textarea class="form-control" ng-model="vm.civilservantgrade.description" rows="3" style="resize: vertical; overflow-x: hidden"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" ng-click="$dismiss()" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+            <button type="button" ng-click="$close('yes');" class="btn btn-primary" data-dismiss="modal">Lưu</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="confirm_delete_modal.html">
+    <div modal-movable>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="$dismiss()" aria-hidden="true"></button>
+            <h4 class="modal-title"><i class="icon-question"></i>Xóa</h4>
+        </div>
+        <div class="modal-body">
+            <p>Bạn có chắc chắn muốn xóa <span ng-cloak>{{vm.selectedCivilServantGrades.length}}</span> bản ghi đó không?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" ng-click="$dismiss()" class="btn btn-default" data-dismiss="modal">Không</button>
+            <button type="button" ng-click="$close('yes')" class="btn btn-primary" data-dismiss="modal">Có</button>
+        </div>
+    </div>
+</script>
+<!-- BEGIN MAIN JS -->

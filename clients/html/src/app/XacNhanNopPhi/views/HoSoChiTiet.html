@@ -1,0 +1,210 @@
+
+<style>
+.text-custom{
+	font-size: 16px;
+	margin: 10px 0px;
+}
+.clear{
+	clear: both;
+}
+.text-left > div{
+	margin:10px 0px;
+}
+</style>
+
+<div class="col-md-12" style="background-color: #fff;">
+	<div class="bold">
+		<h4>Thông tin hồ sơ</h4>
+	</div>
+	<div class="text-custom">
+		Mã hồ sơ: <span class="bold">{{vm.data.maHoSo}}</span>
+	</div>
+	<div class="text-custom">
+		Tên thủ tục hành chính: <span class="bold">{{vm.data.tenThuTuc}}</span>
+	</div>
+	<div class="text-custom">
+		Chủ hồ sơ: <span class="bold">{{vm.data.chuHoSo}}</span>
+	</div>
+	<div class="text-custom">
+		Địa chỉ: <span class="bold">{{vm.data.diaChi}}</span>
+	</div>
+	
+	<div class="text-custom">
+		Điện thoại: <span class="bold">{{vm.data.dienThoai}}</span>
+	</div>
+	<div class="text-custom">
+		Email: <span class="bold">{{vm.data.email}}</span>
+	</div>
+	<div class="text-custom">
+		Ngày nộp: <span class="bold">{{vm.data.ngayNopHoSo | date: 'dd/MM/yyyy'}}</span>
+	</div>
+	
+	<div class="text-custom" style="margin: 15px 0px;">
+		<button type="button" class="btn btn-default" ng-click="vm.back()">Quay lại</button>
+		<button type="button" class="btn btn-default" style="margin-left:20px;" ng-click="vm.kiemTraThongTinNopPhi()">Kiểm tra thông tin nộp phí</button>
+	</div>
+	<div class="clear"></div>
+	<div class="" style="margin:30px 30px;">
+		<uib-tabset class="text-bold" active="activeForm">
+                <uib-tab index="0" heading="Xem hồ sơ">
+	                <div style="" class="clear-fix"><!-- border: 1px solid; -->
+	                	<div class="text-center">
+							<div>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
+							<div>Độc lập - Tự do - Hạnh phúc</div>
+							<div>---------------</div>
+							<div style="font-weight: normal;">Hà Nội, ngày 24 tháng 02 năm 2019</div>
+							<p></p>
+							<div>
+								VĂN BẢN ĐỀ NGHỊ NHẬP KHẨU
+							</div>
+							<div style="font-weight: normal;">Kính gửi: Cục Quản lý môi trường y tế</div>
+							<div style="font-weight: normal;">
+								<div class="text-left">
+			                		<div class="col-md-12">Tên đơn vị xin nhập khẩu: {{vm.data.chuHoSo}}</div>
+			                		<div class="col-md-12">Địa chỉ liên hệ: {{vm.data.diaChi}}</div>
+			                		<div>
+			                			<div class="col-md-6">Điện thoại: {{vm.data.dienThoai}}</div>
+			                			<div class="col-md-6">Email: {{vm.data.email}}</div>
+			                		</div>
+			                		<div class="col-md-12">Đề nghị được nhập khẩu chế phẩm dùng trong lĩnh vực gia dụng và y tế như sau:</div>
+			                		
+			                		<!-- table -->
+			                		<div class="col-md-12">
+			                			<div>
+			                				<table class="table" border="1">
+    <thead>
+      <tr>
+        <th>TT</th>
+        <th>Tên thương mại</th>
+        <th>Hàm lượng hoạt chất</th>
+        <th>Tác dụng của chế phẩm</th>
+        <th>Đơn vị tính</th>
+        <th>Số lượng</th>
+        <th>Tên, địa chỉ nhà sản xuất</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="chepham in vm.data.danhSachChePham">
+        <td>{{$index + 1}}</td>
+        <td>{{chepham.tenThuongMai}}</td>
+        <td>{{chepham.hamLuongHoatChat}}</td>
+        <td>{{chepham.tacDung}}</td>
+        <td>{{chepham.donViTinh}}</td>
+        <td>{{chepham.soLuong}}</td>
+        <td>{{chepham.tenDiaChiNhaSanXuat}}</td>
+      </tr>
+    </tbody>
+  </table>
+			                			</div>
+			                		</div>
+			                		<!-- end table -->
+			                		
+			                		<div class="col-md-12">Mục đích nhập khẩu (ghi rõ) :</div>
+			                		<div class="col-md-12">Chúng tôi xin cam kết đảm bảo việc nhập khẩu chế phẩm nêu trên như sau:</div>
+			                		<div class="col-md-12">1. Đảm bảo hiệu lực, an toàn của chế phẩm cho người sử dụng và môi trường.</div>
+			                		<div class="col-md-12">2. Bảo đảm sử dụng số chế phẩm được nhập khẩu theo đúng nội dung văn bản đề nghị nhập khẩu.</div>
+			                		<div class="col-md-12">Nếu vi phạm cam kết nêu trên chúng tôi xin hoàn toàn chịu trách nhiệm trước pháp luật.</div>
+			                	</div>
+							</div>
+	                	
+	                	</div>
+	                	
+	                </div>
+                </uib-tab>
+
+                <uib-tab index="1" heading="Tiến trình xử lý">
+                    <div class="panel panel-default" style="border: solid 1px #cddbd1;">
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+	</div>
+	<div class="text-custom" style="margin: 30px 0px;">
+		<button type="button" class="btn btn-default" ng-click="vm.back()">Quay lại</button>
+		<button type="button" class="btn btn-default" style="margin-left:20px;" ng-click="vm.kiemTraThongTinNopPhi()">Kiểm tra thông tin nộp phí</button>
+	</div>
+</div>
+
+
+<script type="text/ng-template" id="KiemTraThongTinNopPhi_modal.html">
+    <div modal-movable>
+        <div class="modal-body">
+			<div class="col-md-12">
+				<div class="text-custom">
+					Tên thủ tục: <span class="bold">{{vm.data.tenThuTuc}}</span>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="text-custom">
+					Tên doanh nghiệp: <span class="bold">{{vm.data.chuHoSo}}</span>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="text-custom">
+					Ngày nộp hồ sơ: <span class="bold">{{vm.data.ngayNopHoSo | date: 'dd/MM/yyyy'}}</span>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="text-custom">
+					Người nộp hồ sơ: <span class="bold">{{vm.data.chuHoSo}}</span>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="text-custom">
+					Số hóa đơn: <span class="bold">{{vm.data.soHoaDon}}</span>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="text-custom">
+					Ngày nộp tiền: <span class="bold">{{vm.data.ngayNopTien | date: 'dd/MM/yyyy'}}</span>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="text-custom">
+					Người nộp tiền: <span class="bold">{{vm.data.chuHoSo}}</span>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="text-custom">
+					Nội dung nộp: <span class="bold"></span>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="text-custom">
+					Số tiền phí: <span class="bold">{{vm.data.soTien}}</span>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="text-custom">
+					Phương thức thanh toán: <span class="bold"></span>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="text-custom">
+					Phiếu chuyển khoản: <span class="bold"></span>
+				</div>
+			</div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" ng-click="vm.close()" class="btn btn-default" data-dismiss="modal">Quay lại</button>
+            <button type="button" ng-click="vm.confirm(1)" class="btn btn-primary" data-dismiss="modal">Xác nhận nộp phí</button>
+            <button type="button" ng-click="vm.reConfirm()" class="btn btn-primary" data-dismiss="modal">Yêu cầu nộp phí lại</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="reConfirm_modal.html">
+    <div modal-movable>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="$dismiss()" aria-hidden="true"></button>
+            <h4 class="modal-title"> Yêu cầu nộp lại phí</h4>
+        </div>
+        <div class="modal-body">
+			<div>Ghi chú: </div>
+			<textarea ng-modal="vm.data.ghiChu"> </textarea>
+        </div>
+        <div class="modal-footer">
+            <button type="button" ng-click="$dismiss()" class="btn btn-default" data-dismiss="modal">Quay lại</button>
+            <button type="button" ng-click="vm.reConfirmPopup(-1)" class="btn btn-primary" data-dismiss="modal">Yêu cầu nộp phí lại</button>
+        </div>
+    </div>
+</script>
